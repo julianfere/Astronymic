@@ -1,0 +1,73 @@
+/* Colores por tema (SPEC § 5). No aclarar: con estos valores se cumple AA. */
+
+:root,
+[data-theme='light'] {
+  color-scheme: light;
+  --bg: #e3d2aa;
+  --text: #3e2b1b;
+  --head: #241609;
+  --sub: #4a3523;
+  --muted: #65503a;
+  --label: #4a3523;
+  --ink: #2b1d12;
+  --accent: #8a2c1a;
+  --star-fill: #efe3c4;
+  --rule-strong: rgba(43, 29, 18, 0.7);
+  --rule-mid: rgba(43, 29, 18, 0.4);
+  --rule-soft: rgba(43, 29, 18, 0.22);
+  --orbit: rgba(43, 29, 18, 0.22);
+  --orbit-soft: rgba(43, 29, 18, 0.1);
+  --frame-bg: rgba(250, 241, 216, 0.35);
+  --frame-shadow: inset 0 0 60px rgba(120, 80, 35, 0.22);
+  --card-bg: rgba(250, 241, 216, 0.25);
+  --btn-bg: rgba(58, 39, 20, 0.06);
+  --hover-bg: rgba(140, 105, 60, 0.14);
+  --card-hover-bg: rgba(160, 120, 60, 0.12);
+  --card-hover-border: rgba(150, 112, 62, 0.75);
+  --selection: rgba(138, 44, 26, 0.25);
+
+  /* Papel */
+  --bg-image: radial-gradient(ellipse 70% 45% at 22% 12%, rgba(255, 248, 226, 0.75), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 82% 64%, rgba(150, 98, 42, 0.16), transparent 70%),
+    radial-gradient(circle at 12% 78%, rgba(130, 84, 36, 0.12), transparent 22%),
+    radial-gradient(circle at 70% 22%, rgba(150, 100, 45, 0.08), transparent 16%),
+    radial-gradient(ellipse 130% 95% at 50% 45%, transparent 55%, rgba(92, 58, 24, 0.38) 100%);
+  --paper-blend: multiply;
+  --paper-op: 0.5;
+  --stain-op: 0.45;
+  --fleck: #3a2714;
+  --fleck-scale: 1;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #17120c;
+  --text: #ded1b3;
+  --head: #f1e6cb;
+  --sub: #cdbd9a;
+  --muted: #ad9d7d;
+  --label: #d8caa8;
+  --ink: #e9dcbc;
+  --accent: #d9775c;
+  --star-fill: #1d1710;
+  --rule-strong: rgba(233, 220, 188, 0.55);
+  --rule-mid: rgba(233, 220, 188, 0.3);
+  --rule-soft: rgba(233, 220, 188, 0.16);
+  --orbit: rgba(233, 220, 188, 0.18);
+  --orbit-soft: rgba(233, 220, 188, 0.08);
+  --frame-bg: rgba(10, 7, 4, 0.35);
+  --frame-shadow: inset 0 0 70px rgba(0, 0, 0, 0.55);
+  --card-bg: rgba(10, 7, 4, 0.3);
+  --btn-bg: rgba(233, 220, 188, 0.06);
+  --selection: rgba(217, 119, 92, 0.3);
+
+  --bg-image: radial-gradient(ellipse 70% 45% at 22% 12%, rgba(120, 88, 48, 0.2), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 82% 64%, rgba(90, 60, 28, 0.16), transparent 70%),
+    radial-gradient(circle at 12% 78%, rgba(0, 0, 0, 0.25), transparent 22%),
+    radial-gradient(ellipse 130% 95% at 50% 45%, transparent 50%, rgba(0, 0, 0, 0.6) 100%);
+  --paper-blend: screen;
+  --paper-op: 0.13;
+  --stain-op: 0.7;
+  --fleck: #efe3c4;
+  --fleck-scale: 1.6;
+}

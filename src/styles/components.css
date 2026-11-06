@@ -1,0 +1,651 @@
+/* ---------- Botones ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 52px;
+  padding: 0 18px;
+  background: transparent;
+  border: 1px solid var(--rule-mid);
+  border-radius: 2px;
+  color: var(--text);
+  font-family: 'IM Fell English SC', Georgia, serif;
+  font-size: 18px;
+  letter-spacing: 0.1em;
+  transition:
+    background-color 0.25s,
+    transform 0.2s;
+}
+
+.btn:hover {
+  background: var(--hover-bg);
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  padding: 0 22px;
+  background: var(--btn-bg);
+  border: 1.5px solid var(--head);
+  color: var(--head);
+  font-size: 19px;
+  letter-spacing: 0.14em;
+}
+
+.icon-btn {
+  width: 48px;
+  height: 48px;
+  min-height: 48px;
+  padding: 0;
+  border: 1px solid var(--rule-strong);
+  border-radius: 50%;
+  color: var(--head);
+}
+
+.theme-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: -40px;
+}
+
+.icon-sun,
+[data-theme='dark'] .icon-moon {
+  display: none;
+}
+
+[data-theme='dark'] .icon-sun {
+  display: block;
+}
+
+/* ---------- Encabezado ---------- */
+
+.masthead {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  animation: fade-up 1.2s both;
+}
+
+.masthead-rule {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--ink);
+}
+
+.rule-line {
+  width: 90px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+.kicker {
+  font-family: 'IM Fell English SC', Georgia, serif;
+  font-size: 17px;
+  letter-spacing: 0.32em;
+  color: var(--accent);
+}
+
+.title {
+  font-size: clamp(46px, 8vw, 88px);
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+
+.lede {
+  max-width: 580px;
+  font-size: 22px;
+  font-style: italic;
+  color: var(--sub);
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- Generador ---------- */
+
+.generator {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1 1 280px;
+  max-width: 420px;
+}
+
+.field label {
+  font-family: 'IM Fell English SC', Georgia, serif;
+  font-size: 16px;
+  letter-spacing: 0.22em;
+  color: var(--muted);
+}
+
+.field input {
+  width: 100%;
+  height: 52px;
+  padding: 0 6px;
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid var(--head);
+  border-radius: 0;
+  color: var(--head);
+  font-family: 'IM Fell English SC', Georgia, serif;
+  font-size: 28px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.field input::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+
+/* ---------- Lámina ---------- */
+
+.plate {
+  position: relative;
+  padding: 16px;
+  border: 1.5px solid var(--rule-strong);
+  background: var(--frame-bg);
+  box-shadow: var(--frame-shadow);
+}
+
+.plate::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px solid var(--rule-mid);
+  pointer-events: none;
+}
+
+.corner {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  fill: var(--star-fill);
+  stroke: var(--ink);
+}
+
+.corner-tl {
+  left: -8px;
+  top: -8px;
+}
+.corner-tr {
+  right: -8px;
+  top: -8px;
+}
+.corner-bl {
+  left: -8px;
+  bottom: -8px;
+}
+.corner-br {
+  right: -8px;
+  bottom: -8px;
+}
+
+.sky-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1000 / 720;
+}
+
+.empty {
+  position: absolute;
+  inset: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  font-size: 26px;
+  font-style: italic;
+  color: var(--muted);
+}
+
+/* El SVG del cielo: los colores vienen de los tokens (pisan los atributos). */
+.sky {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.sky .ink-stroke,
+.mini .ink-stroke {
+  stroke: var(--ink);
+}
+
+.sky .ink-fill,
+.mini .ink-fill {
+  fill: var(--ink);
+}
+
+.sky .major,
+.mini .major {
+  fill: var(--star-fill);
+  stroke: var(--ink);
+}
+
+.sky .accent-stroke {
+  stroke: var(--accent);
+}
+
+.sky .label-fill {
+  fill: var(--label);
+}
+
+.sky.labels-off .labels {
+  display: none;
+}
+
+.sky .orbit {
+  stroke: var(--orbit);
+  stroke-width: 1.4;
+}
+
+.sky .orbit-soft {
+  stroke: var(--orbit-soft);
+  stroke-width: 1.4;
+}
+
+.sky .spin,
+.sky .spin-rev,
+.sky .pop,
+.sky .ring,
+.sky .pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.sky .spin {
+  animation: spin 180s linear infinite;
+}
+
+.sky .spin-rev {
+  animation: spin 240s linear infinite reverse;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sky .spin,
+  .sky .spin-rev,
+  .masthead {
+    animation: none;
+  }
+}
+
+/* ---------- Pie de la lámina ---------- */
+
+.caption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.word-display {
+  min-height: 1.2em;
+  font-family: 'IM Fell English SC', Georgia, serif;
+  font-size: clamp(30px, 4.6vw, 44px);
+  letter-spacing: 0.26em;
+  line-height: 1.2;
+  color: var(--head);
+  /* El tracking deja aire a la derecha: se compensa para centrar. */
+  padding-left: 0.26em;
+}
+
+.reading {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  font-size: 19px;
+  color: var(--sub);
+}
+
+.reading-intro {
+  font-style: italic;
+}
+
+.sequence {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.seq-letter {
+  font-family: 'IM Fell English SC', Georgia, serif;
+  font-size: 21px;
+  letter-spacing: 0.08em;
+  color: var(--head);
+}
+
+.seq-sep {
+  color: var(--accent);
+}
+
+.note {
+  max-width: 680px;
+  font-size: 17px;
+  font-style: italic;
+  color: var(--muted);
+}
+
+/* ---------- Botones de descarga (SPEC § 7) ---------- */
+
+.downloads {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
+  padding: 4px;
+}
+
+.download[aria-busy='true'] {
+  cursor: progress;
+  opacity: 0.7;
+}
+
+.download {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 56px;
+  padding: 8px 22px 8px 10px;
+  background: var(--btn-bg);
+  border: 1.5px solid var(--head);
+  outline: 1px solid var(--rule-mid);
+  outline-offset: 3px;
+  border-radius: 2px;
+  color: var(--head);
+  text-align: left;
+  transition:
+    background-color 0.25s,
+    transform 0.2s;
+}
+
+.download:hover {
+  background: var(--hover-bg);
+  transform: translateY(-1px);
+}
+
+.download:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.download-icon {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  color: var(--accent);
+  transition:
+    background-color 0.25s,
+    color 0.25s;
+}
+
+.download:hover .download-icon {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.download .icon-check,
+.download.is-saved .icon-download {
+  display: none;
+}
+
+.download.is-saved .icon-check {
+  display: block;
+}
+
+.download-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.download-title {
+  font-family: 'IM Fell English SC', Georgia, serif;
+  font-size: 20px;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+}
+
+.download-sub {
+  font-size: 15px;
+  font-style: italic;
+  line-height: 1.2;
+  color: var(--muted);
+}
+
+/* ---------- Abecedario ---------- */
+
+.alphabet {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.section-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.section-head h2,
+.laws h2 {
+  font-size: 36px;
+  letter-spacing: 0.14em;
+  text-align: center;
+}
+
+.section-head p {
+  font-size: 20px;
+  font-style: italic;
+  color: var(--sub);
+}
+
+.letter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.group-title {
+  font-size: 18px;
+  letter-spacing: 0.24em;
+  color: var(--accent);
+}
+
+.letter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+/* Recuadro de vocales con doble filete, como en la fuente. */
+.vowels-box {
+  padding: 14px;
+  border: 1.5px solid var(--rule-strong);
+  outline: 1px solid var(--rule-mid);
+  outline-offset: 4px;
+  margin: 4px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-height: 44px;
+  padding: 10px 10px 12px;
+  background: var(--card-bg);
+  border: 1px solid var(--rule-soft);
+  border-radius: 2px;
+  color: var(--ink);
+  text-align: left;
+  transition:
+    border-color 0.3s,
+    background-color 0.3s,
+    transform 0.3s;
+}
+
+.card:hover {
+  border-color: var(--card-hover-border, var(--rule-strong));
+  background: var(--card-hover-bg, var(--hover-bg));
+  transform: translateY(-2px) rotate(-0.3deg);
+}
+
+.card-letter {
+  padding-left: 4px;
+  font-family: 'IM Fell English SC', Georgia, serif;
+  font-size: 24px;
+  line-height: 1.3;
+  color: var(--head);
+}
+
+.mini {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 1;
+  overflow: visible;
+}
+
+/* ---------- Leyes ---------- */
+
+.laws {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.laws-list {
+  width: 100%;
+  max-width: 720px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--rule-mid);
+}
+
+.laws-list li {
+  display: flex;
+  gap: 20px;
+  align-items: baseline;
+  padding: 16px 4px;
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.law-num {
+  flex: 0 0 44px;
+  font-family: 'IM Fell English SC', Georgia, serif;
+  font-size: 24px;
+  color: var(--accent);
+}
+
+.law-text {
+  font-size: 21px;
+  line-height: 1.45;
+}
+
+/* ---------- Pie ---------- */
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  font-size: 18px;
+  font-style: italic;
+  color: var(--muted);
+  text-align: center;
+}
+
+.footer svg {
+  flex: none;
+}
+
+/* ---------- Pantallas chicas ---------- */
+
+@media (max-width: 560px) {
+  .page {
+    gap: 40px;
+  }
+
+  .controls {
+    align-items: stretch;
+  }
+
+  .field {
+    flex-basis: 100%;
+    max-width: none;
+  }
+
+  .controls .btn {
+    flex: 1 1 auto;
+    padding: 0 12px;
+  }
+
+  .plate {
+    padding: 10px;
+  }
+
+  /* Dos columnas también dentro del recuadro de vocales. */
+  .letter-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+  }
+
+  .vowels-box {
+    padding: 10px;
+  }
+
+  .laws-list li {
+    gap: 12px;
+  }
+
+  .law-num {
+    flex-basis: 36px;
+  }
+}

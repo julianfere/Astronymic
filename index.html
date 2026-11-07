@@ -47,6 +47,7 @@
 
     <div class="page">
       <div class="theme-row">
+        <button type="button" id="lang-toggle" class="btn icon-btn lang-btn" lang="en" aria-label="Switch to English">EN</button>
         <button type="button" id="theme-toggle" class="btn icon-btn" aria-pressed="false" aria-label="Cambiar a modo oscuro">
           <svg class="icon-moon" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" /></svg>
           <svg class="icon-sun" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4" /><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" /></svg>
@@ -59,22 +60,22 @@
           <svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 1.5C12.7 7.8 16.2 11.3 22.5 12C16.2 12.7 12.7 16.2 12 22.5C11.3 16.2 7.8 12.7 1.5 12C7.8 11.3 11.3 7.8 12 1.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" /></svg>
           <span class="rule-line"></span>
         </div>
-        <p class="kicker">Lenguaje de las constelaciones</p>
+        <p class="kicker" data-i18n="kicker">Lenguaje de las constelaciones</p>
         <h1 class="title">Astronymic</h1>
-        <p class="lede">Escribí una palabra y dejá que la pluma la trace: cada letra es un tramo de estrellas, cada palabra una constelación.</p>
+        <p class="lede" data-i18n="lede">Escribí una palabra y dejá que la pluma la trace: cada letra es un tramo de estrellas, cada palabra una constelación.</p>
       </header>
 
       <main class="main">
-        <section class="generator" aria-label="Generador">
+        <section class="generator" aria-label="Generador" data-i18n-label="generator">
           <form id="word-form" class="controls" autocomplete="off">
             <div class="field">
-              <label for="word">Palabra</label>
+              <label for="word" data-i18n="wordLabel">Palabra</label>
               <input id="word" name="word" type="text" maxlength="14" autocomplete="off" spellcheck="false" autocapitalize="characters" placeholder="ej. ORION" />
             </div>
-            <button type="submit" class="btn btn-primary">Trazar</button>
+            <button type="submit" class="btn btn-primary" data-i18n="trace">Trazar</button>
             <button type="button" id="reshape" class="btn">
               <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.34-5.66" /><path d="M20 4v5h-5" /></svg>
-              Otra forma
+              <span data-i18n="reshape">Otra forma</span>
             </button>
             <button type="button" id="toggle-labels" class="btn" aria-pressed="true">Ocultar letras</button>
             <button type="button" id="toggle-branches" class="btn" aria-pressed="true">Ramas: sí</button>
@@ -86,7 +87,7 @@
             <svg class="corner corner-bl" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><path d="M12 1.5C12.7 7.8 16.2 11.3 22.5 12C16.2 12.7 12.7 16.2 12 22.5C11.3 16.2 7.8 12.7 1.5 12C7.8 11.3 11.3 7.8 12 1.5Z" stroke-width="1.6" stroke-linejoin="round" /></svg>
             <svg class="corner corner-br" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><path d="M12 1.5C12.7 7.8 16.2 11.3 22.5 12C16.2 12.7 12.7 16.2 12 22.5C11.3 16.2 7.8 12.7 1.5 12C7.8 11.3 11.3 7.8 12 1.5Z" stroke-width="1.6" stroke-linejoin="round" /></svg>
             <div id="sky" class="sky-wrap"></div>
-            <p id="empty" class="empty" hidden>El pergamino espera una palabra.</p>
+            <p id="empty" class="empty" data-i18n="empty" hidden>El pergamino espera una palabra.</p>
           </div>
 
           <div class="caption">
@@ -115,39 +116,43 @@
             </div>
             <p id="download-status" class="visually-hidden" aria-live="polite"></p>
             <div id="reading" class="reading">
-              <span class="reading-intro">Lectura desde la estrella con círculo, en sentido horario:</span>
+              <span class="reading-intro" data-i18n="readingIntro">Lectura desde la estrella con círculo, en sentido horario:</span>
               <span id="sequence" class="sequence"></span>
             </div>
-            <p id="branch-note" class="note">↺ marca una rama: la letra termina en una estrella suelta y la siguiente sale de la misma estrella que ella.</p>
-            <p id="dropped" class="note" hidden>Se omitieron caracteres sin estrella en el abecedario (números, signos o espacios).</p>
+            <p id="branch-note" class="note" data-i18n="branchNote">↺ marca una rama: la letra termina en una estrella suelta y la siguiente sale de la misma estrella que ella.</p>
+            <p id="dropped" class="note" data-i18n="dropped" hidden>Se omitieron caracteres sin estrella en el abecedario (números, signos o espacios).</p>
           </div>
         </section>
 
         <section class="alphabet" aria-labelledby="abc">
           <div class="section-head">
-            <h2 id="abc">El abecedario</h2>
-            <p>Tocá una letra para sumarla a la palabra.</p>
+            <h2 id="abc" data-i18n="alphabetTitle">El abecedario</h2>
+            <p data-i18n="alphabetHint">Tocá una letra para sumarla a la palabra.</p>
           </div>
           <div class="letter-group">
-            <h3 class="group-title">Vocales</h3>
+            <h3 class="group-title" data-i18n="vowels">Vocales</h3>
             <div id="vowels" class="letter-grid vowels-box"></div>
           </div>
           <div class="letter-group">
-            <h3 class="group-title">Consonantes</h3>
+            <h3 class="group-title" data-i18n="consonants">Consonantes</h3>
             <div id="consonants" class="letter-grid"></div>
           </div>
         </section>
 
         <section class="laws" aria-labelledby="leyes">
-          <h2 id="leyes">Las seis leyes</h2>
+          <h2 id="leyes" data-i18n="lawsTitle">Las seis leyes</h2>
           <ol id="laws" class="laws-list"></ol>
         </section>
       </main>
 
       <footer class="footer">
         <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24"><path d="M12 0C12.8 7.5 16.5 11.2 24 12C16.5 12.8 12.8 16.5 12 24C11.2 16.5 7.5 12.8 0 12C7.5 11.2 11.2 7.5 12 0Z" fill="currentColor" /></svg>
-        <span>Va mejor con palabras sueltas que con frases.</span>
+        <span data-i18n="footer">Va mejor con palabras sueltas que con frases.</span>
         <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24"><path d="M12 0C12.8 7.5 16.5 11.2 24 12C16.5 12.8 12.8 16.5 12 24C11.2 16.5 7.5 12.8 0 12C7.5 11.2 11.2 7.5 12 0Z" fill="currentColor" /></svg>
+        <p class="credit">
+          <span data-i18n="creditPrefix">Lenguaje creado por</span>
+          <a href="https://www.instagram.com/the_alchemy_book/" target="_blank" rel="noopener noreferrer">@the_alchemy_book</a>
+        </p>
       </footer>
     </div>
   </body>

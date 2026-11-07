@@ -1,3 +1,5 @@
+import type { Strings } from './i18n';
+
 export type Theme = 'light' | 'dark';
 
 const KEY = 'astronymic-theme';
@@ -58,8 +60,8 @@ export function onSystemThemeChange(cb: (t: Theme) => void): void {
 }
 
 /** Botón de tema: ícono, aria-pressed y aria-label (SPEC § 3). */
-export function syncThemeButton(button: HTMLButtonElement, theme: Theme): void {
+export function syncThemeButton(button: HTMLButtonElement, theme: Theme, t: Strings): void {
   const dark = theme === 'dark';
   button.setAttribute('aria-pressed', String(dark));
-  button.setAttribute('aria-label', dark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
+  button.setAttribute('aria-label', dark ? t.themeToLight : t.themeToDark);
 }

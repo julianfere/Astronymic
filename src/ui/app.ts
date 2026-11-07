@@ -4,6 +4,7 @@ import { downloadBlob, downloadSvg } from '../render/download';
 import { renderPng } from '../render/png';
 import { exportFileName, renderConstellation, type Paint } from '../render/svg';
 import { renderAlphabet } from './alphabet';
+import { applyStaticText, initialLang, saveLang, strings, type Lang, type Strings } from './i18n';
 import { byId, setupControls } from './controls';
 import { renderLaws } from './laws';
 import { renderFlecks } from './paper';
@@ -16,6 +17,7 @@ interface State {
   branches: boolean;
   labels: boolean;
   theme: Theme;
+  lang: Lang;
   dropped: boolean;
   /** Clave de lo último guardado en cada formato (SPEC § 7, estado Guardada). */
   saved: Partial<Record<Format, string>>;
@@ -23,10 +25,9 @@ interface State {
 
 type Format = 'svg' | 'png';
 
-const DOWNLOAD_TEXT: Record<Format, [string, string]> = {
-  svg: ['Descargar SVG', 'Vectorial, lista para imprimir'],
-  png: ['Descargar PNG', 'Imagen de 2000 × 1640 px'],
-};
+function downloadText(t: Strings, format: Format): [string, string] {
+  return format === 'svg' ? [t.svgTitle, t.svgSub] : [t.pngTitle, t.pngSub];
+}
 
 /** Colores actuales, leídos de los tokens CSS (única fuente de verdad). */
 function currentPaint(): Paint {
@@ -77,6 +78,7 @@ export function startApp(): void {
     branches: true,
     labels: true,
     theme: initialTheme(),
+    lang: initialLang(),
     dropped: false,
     saved: {},
   };
@@ -93,6 +95,9 @@ export function startApp(): void {
   const branchNote = byId<HTMLParagraphElement>('branch-note');
   const dropped = byId<HTMLParagraphElement>('dropped');
   const themeButton = byId<HTMLButtonElement>('theme-toggle');
+  const langButton = byId<HTMLButtonElement>('lang-toggle');
+  const t = (): Strings => strings(state.lang);
+  const skyLabel = (word: string) => (word ? t().skyLabel(word) : t().skyEmpty);
 
   let constellation: Constellation = generate(state.word, { seed: state.seed, branches: state.branches });
 
@@ -102,7 +107,7 @@ export function startApp(): void {
   function drawSky(animate: boolean): void {
     constellation = generate(state.word, { seed: state.seed, branches: state.branches });
     const hasWord = constellation.letters.length > 0;
-    sky.innerHTML = renderConstellation(constellation, { mode: 'screen', paint: currentPaint(), labels: state.labels });
+    sky.innerHTML = renderConstellation(constellation, { mode: 'screen', paint: currentPaint(), labels: state.labels, ariaLabel: skyLabel(constellation.word) });
     empty.hidden = hasWord;
     const svg = sky.querySelector('svg');
     if (svg && animate) playDrawing(svg);
@@ -146,7 +151,7 @@ export function startApp(): void {
       if (!saved) delete state.saved[format];
       any ||= saved;
       btn.classList.toggle('is-saved', saved);
-      const [title, sub] = saved ? ['Guardada', 'Revisá tu carpeta de descargas'] : DOWNLOAD_TEXT[format];
+      const [title, sub] = saved ? [t().savedTitle, t().savedSub] : downloadText(t(), format);
       btn.querySelector('.download-title')!.textContent = title;
       btn.querySelector('.download-sub')!.textContent = sub;
     }
@@ -214,7 +219,7 @@ export function startApp(): void {
         downloadBlob(await renderPng(c, paint, state.labels), name);
       } catch (err) {
         console.error(err);
-        downloadStatus.textContent = 'No se pudo crear el PNG.';
+        downloadStatus.textContent = t().pngError;
         return;
       } finally {
         btn.removeAttribute('aria-busy');
@@ -222,7 +227,7 @@ export function startApp(): void {
     }
     state.saved[format] = key;
     renderDownloadState();
-    downloadStatus.textContent = `${format.toUpperCase()} guardada. Revisá tu carpeta de descargas.`;
+    downloadStatus.textContent = t().savedStatus(format.toUpperCase());
   }
 
   for (const btn of downloadButtons) {
@@ -232,7 +237,7 @@ export function startApp(): void {
   function setTheme(theme: Theme, animate: boolean): void {
     state.theme = theme;
     applyTheme(theme, animate);
-    syncThemeButton(themeButton, theme);
+    syncThemeButton(themeButton, theme, t());
     renderDownloadState();
   }
 
@@ -243,12 +248,34 @@ export function startApp(): void {
   });
   onSystemThemeChange((t) => setTheme(t, true));
 
+  /** Cambia los textos sin volver a trazar la constelación. */
+  function setLang(lang: Lang): void {
+    state.lang = lang;
+    const s = t();
+    applyStaticText(lang);
+    langButton.textContent = s.langToggle;
+    langButton.setAttribute('aria-label', s.langToggleLabel);
+    langButton.lang = lang === 'es' ? 'en' : 'es';
+    controls.setStrings(s);
+    syncThemeButton(themeButton, state.theme, s);
+    sky.querySelector('svg')?.setAttribute('aria-label', skyLabel(constellation.word));
+    renderLaws(byId<HTMLOListElement>('laws'), s);
+    renderAlphabet(byId('vowels'), byId('consonants'), currentPaint(), s, addLetter);
+    renderDownloadState();
+    downloadStatus.textContent = '';
+  }
+
+  langButton.addEventListener('click', () => {
+    const next: Lang = state.lang === 'es' ? 'en' : 'es';
+    saveLang(next);
+    setLang(next);
+  });
+
   // Primer render.
+  setLang(state.lang);
   setTheme(state.theme, false);
   controls.setLabels(state.labels);
   controls.setBranches(state.branches);
   renderFlecks(byId<SVGSVGElement>('flecks'));
-  renderLaws(byId<HTMLOListElement>('laws'));
-  renderAlphabet(byId('vowels'), byId('consonants'), currentPaint(), addLetter);
   redraw(true);
 }

@@ -1,3 +1,5 @@
+import type { Strings } from './i18n';
+
 export interface ControlHandlers {
   onDraftInput(value: string): void;
   onTrace(): void;
@@ -11,6 +13,7 @@ export interface Controls {
   setDraft(value: string): void;
   setLabels(on: boolean): void;
   setBranches(on: boolean): void;
+  setStrings(t: Strings): void;
 }
 
 const byId = <T extends Element>(id: string): T => {
@@ -36,20 +39,32 @@ export function setupControls(h: ControlHandlers): Controls {
   labels.addEventListener('click', () => h.onToggleLabels());
   branches.addEventListener('click', () => h.onToggleBranches());
 
-  return {
+  let t: Strings | null = null;
+  let labelsOn = true;
+  let branchesOn = true;
+
+  const controls: Controls = {
     input,
     setDraft(value) {
       if (input.value !== value) input.value = value;
     },
     setLabels(on) {
+      labelsOn = on;
       labels.setAttribute('aria-pressed', String(on));
-      labels.textContent = on ? 'Ocultar letras' : 'Mostrar letras';
+      if (t) labels.textContent = on ? t.labelsHide : t.labelsShow;
     },
     setBranches(on) {
+      branchesOn = on;
       branches.setAttribute('aria-pressed', String(on));
-      branches.textContent = on ? 'Ramas: sí' : 'Ramas: no';
+      if (t) branches.textContent = on ? t.branchesOn : t.branchesOff;
+    },
+    setStrings(next) {
+      t = next;
+      controls.setLabels(labelsOn);
+      controls.setBranches(branchesOn);
     },
   };
+  return controls;
 }
 
 export { byId };

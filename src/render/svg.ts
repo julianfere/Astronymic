@@ -40,6 +40,8 @@ export interface RenderOptions {
    * (una imagen SVG no puede usar las fuentes web del documento).
    */
   text?: boolean;
+  /** Solo `screen`: aria-label del SVG. Por defecto, en español. */
+  ariaLabel?: string;
 }
 
 export const STAR_MINOR =
@@ -244,7 +246,7 @@ export function renderConstellation(c: Constellation, opts: RenderOptions): stri
       viewBox: `0 0 ${CANVAS_W} ${CANVAS_H}`,
       class: opts.labels ? 'sky' : 'sky labels-off',
       role: 'img',
-      'aria-label': c.word ? `Constelación de la palabra ${c.word}` : 'Pergamino vacío',
+      'aria-label': opts.ariaLabel ?? (c.word ? `Constelación de la palabra ${c.word}` : 'Pergamino vacío'),
     },
     parts.join(''),
   );

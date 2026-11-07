@@ -1,18 +1,12 @@
-export const LAWS: readonly [string, string][] = [
-  ['I', 'La estrella donde empieza la constelación se marca con un círculo.'],
-  ['II', 'Cada tramo puede trazarse hacia cualquier lado: el símbolo de la letra no cambia.'],
-  ['III', 'Siempre se escribe en el sentido de las agujas del reloj.'],
-  ['IV', 'Lo que importa es arriba y abajo: de qué lado del tramo caen las estrellas pequeñas.'],
-  ['V', 'No hay líneas verticales: solo horizontales y diagonales.'],
-  [
-    'VI',
-    'De una misma estrella pueden salir dos letras: se leen en sentido horario, empezando a girar desde el tramo por el que llegaste.',
-  ],
-];
+import type { Strings } from './i18n';
 
-export function renderLaws(list: HTMLOListElement): void {
+const NUMERALS = ['I', 'II', 'III', 'IV', 'V', 'VI'];
+
+/** Las seis leyes, en el idioma de `t`. */
+export function renderLaws(list: HTMLOListElement, t: Strings): void {
   list.replaceChildren(
-    ...LAWS.map(([n, text]) => {
+    ...t.laws.map((text, i) => {
+      const n = NUMERALS[i] ?? String(i + 1);
       const li = document.createElement('li');
       const num = document.createElement('span');
       num.className = 'law-num';
@@ -20,7 +14,7 @@ export function renderLaws(list: HTMLOListElement): void {
       num.textContent = n;
       const label = document.createElement('span');
       label.className = 'visually-hidden';
-      label.textContent = `Ley ${n}: `;
+      label.textContent = t.law(n);
       const body = document.createElement('span');
       body.className = 'law-text';
       body.textContent = text;
